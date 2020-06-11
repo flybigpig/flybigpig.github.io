@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>md/dailyQuestion/事件到底是先到DecorView还是先到Window的？ | FlyBigPig</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="事件到底是先到DecorView还是先到Window的？ 事件先到DecorViewInput系统当用户触摸屏幕或者按键操作，首次触发的是硬件驱动，驱动收到事件后，将该相应事件写入到输入设备节点，这便产生了最原生态的内核事件。接着，输入系统取出原生态的事件，经过层层封装后成为KeyEvent或者MotionEvent ；最后，交付给相应的目标窗口(Window)来消费该输入事件。 1、当屏幕被触摸">
+<meta property="og:type" content="article">
+<meta property="og:title" content="md&#x2F;dailyQuestion&#x2F;事件到底是先到DecorView还是先到Window的？">
+<meta property="og:url" content="http://yoursite.com/2020/06/11/md/dailyQuestion/%E4%BA%8B%E4%BB%B6%E5%88%B0%E5%BA%95%E6%98%AF%E5%85%88%E5%88%B0DecorView%E8%BF%98%E6%98%AF%E5%85%88%E5%88%B0Window%E7%9A%84%EF%BC%9F/index.html">
+<meta property="og:site_name" content="FlyBigPig">
+<meta property="og:description" content="事件到底是先到DecorView还是先到Window的？ 事件先到DecorViewInput系统当用户触摸屏幕或者按键操作，首次触发的是硬件驱动，驱动收到事件后，将该相应事件写入到输入设备节点，这便产生了最原生态的内核事件。接着，输入系统取出原生态的事件，经过层层封装后成为KeyEvent或者MotionEvent ；最后，交付给相应的目标窗口(Window)来消费该输入事件。 1、当屏幕被触摸">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gitee.com/pgm250/blog_img_bed/raw/master/wanan/%E4%BB%8ENative%E5%B1%82%E5%88%B0Framework%E5%B1%82Touch%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91.png">
+<meta property="article:published_time" content="2020-06-11T11:06:10.728Z">
+<meta property="article:modified_time" content="2020-03-30T02:47:50.520Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/pgm250/blog_img_bed/raw/master/wanan/%E4%BB%8ENative%E5%B1%82%E5%88%B0Framework%E5%B1%82Touch%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91.png">
+  
+    <link rel="alternate" href="/atom.xml" title="FlyBigPig" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">FlyBigPig</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-md/dailyQuestion/事件到底是先到DecorView还是先到Window的？" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/11/md/dailyQuestion/%E4%BA%8B%E4%BB%B6%E5%88%B0%E5%BA%95%E6%98%AF%E5%85%88%E5%88%B0DecorView%E8%BF%98%E6%98%AF%E5%85%88%E5%88%B0Window%E7%9A%84%EF%BC%9F/" class="article-date">
+  <time datetime="2020-06-11T11:06:10.728Z" itemprop="datePublished">2020-06-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      md/dailyQuestion/事件到底是先到DecorView还是先到Window的？
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="事件到底是先到DecorView还是先到Window的？"><a href="#事件到底是先到DecorView还是先到Window的？" class="headerlink" title="事件到底是先到DecorView还是先到Window的？"></a>事件到底是先到DecorView还是先到Window的？</h1><blockquote>
+<h1 id="事件先到DecorView"><a href="#事件先到DecorView" class="headerlink" title="事件先到DecorView"></a>事件先到DecorView</h1><h2 id="Input系统"><a href="#Input系统" class="headerlink" title="Input系统"></a>Input系统</h2><p>当用户触摸屏幕或者按键操作，首次触发的是硬件驱动，驱动收到事件后，将该相应事件写入到输入设备节点，这便产生了最原生态的内核事件。接着，输入系统取出原生态的事件，经过层层封装后成为KeyEvent或者MotionEvent ；最后，交付给相应的目标窗口(Window)来消费该输入事件。</p>
+<p>1、当屏幕被触摸，Linux内核会将硬件产生的触摸事件包装为Event存到/dev/input/event[x]目录下。</p>
+<p>2、Input系统—InputReader线程：loop起来让EventHub调用getEvent()不断的从/dev/input/文件夹下读取输入事件。然后转换成EventEntry事件加入到InputDispatcher的mInboundQueue。</p>
+<p>3、Input系统—InputDispatcher线程：从mInboundQueue队列取出事件，转换成DispatchEntry事件加入到connection的outboundQueue队列。再然后开始处理分发事件 <strong>（比如分发到ViewRootImpl的WindowInputEventReceiver中）</strong>，取出outbound队列，放入waitQueue.</p>
+<p>4、Input系统—UI线程：创建socket pair，分别位于”InputDispatcher”线程和focused窗口所在进程的UI主线程，可相互通信。</p>
+<p>这里只说大概，详情请看gityuan的这篇文章<a href="http://gityuan.com/2016/12/31/input-ipc/" target="_blank" rel="noopener">Input系统—事件处理全过程</a>，文章3.3.3小节讲的是input系统事件从Native层分发Framework层的InputEventReceiver.dispachInputEvent()。</p>
+<h2 id="Framework层"><a href="#Framework层" class="headerlink" title="Framework层"></a>Framework层</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;InputEventReceiver.dispachInputEvent()</span><br><span class="line">private void dispatchInputEvent(int seq, InputEvent event) &#123;</span><br><span class="line">    mSeqMap.put(event.getSequenceNumber(), seq);</span><br><span class="line">    onInputEvent(event); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ViewRootImpl-WindowInputEventReceiver"><a href="#ViewRootImpl-WindowInputEventReceiver" class="headerlink" title="ViewRootImpl.WindowInputEventReceiver"></a>ViewRootImpl.WindowInputEventReceiver</h3><p>Native层通过JNI执行Framework层的InputEventReceiver.dispachInputEvent()，而真正调用的是继承了InputEventReceiver的ViewRootImpl.WindowInputEventReceiver。所以这里执行的WindowInputEventReceiver的dispachInputEvent()：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">final class WindowInputEventReceiver extends InputEventReceiver &#123;</span><br><span class="line">    public void onInputEvent(InputEvent event) &#123;</span><br><span class="line">       enqueueInputEvent(event, this, 0, true);</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ViewRootImpl"><a href="#ViewRootImpl" class="headerlink" title="ViewRootImpl"></a>ViewRootImpl</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">void enqueueInputEvent(InputEvent event,</span><br><span class="line">        InputEventReceiver receiver, int flags, boolean processImmediately) &#123;</span><br><span class="line">    ...</span><br><span class="line">    if (processImmediately) &#123;</span><br><span class="line">        &#x2F;&#x2F;关键点：执行Input事件</span><br><span class="line">        doProcessInputEvents();</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        &#x2F;&#x2F;走一遍Handler延迟处理事件</span><br><span class="line">        scheduleProcessInputEvents();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void doProcessInputEvents() &#123;</span><br><span class="line">    while (mPendingInputEventHead !&#x3D; null) &#123;</span><br><span class="line">        QueuedInputEvent q &#x3D; mPendingInputEventHead;</span><br><span class="line">        mPendingInputEventHead &#x3D; q.mNext;</span><br><span class="line">        if (mPendingInputEventHead &#x3D;&#x3D; null) &#123;</span><br><span class="line">            mPendingInputEventTail &#x3D; null;</span><br><span class="line">        &#125;</span><br><span class="line">        q.mNext &#x3D; null;</span><br><span class="line"></span><br><span class="line">        mPendingInputEventCount -&#x3D; 1;</span><br><span class="line">        Trace.traceCounter(Trace.TRACE_TAG_INPUT, mPendingInputEventQueueLengthCounterName,</span><br><span class="line">                mPendingInputEventCount);</span><br><span class="line"></span><br><span class="line">        long eventTime &#x3D; q.mEvent.getEventTimeNano();</span><br><span class="line">        long oldestEventTime &#x3D; eventTime;</span><br><span class="line">        if (q.mEvent instanceof MotionEvent) &#123;</span><br><span class="line">            MotionEvent me &#x3D; (MotionEvent)q.mEvent;</span><br><span class="line">            if (me.getHistorySize() &gt; 0) &#123;</span><br><span class="line">                oldestEventTime &#x3D; me.getHistoricalEventTimeNano(0);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        mChoreographer.mFrameInfo.updateInputEventTime(eventTime, oldestEventTime);</span><br><span class="line">        &#x2F;&#x2F;关键点：进一步派发事件处理</span><br><span class="line">        deliverInputEvent(q);</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private void deliverInputEvent(QueuedInputEvent q) &#123;</span><br><span class="line">    Trace.asyncTraceBegin(Trace.TRACE_TAG_VIEW, &quot;deliverInputEvent&quot;,</span><br><span class="line">            q.mEvent.getSequenceNumber());</span><br><span class="line">    if (mInputEventConsistencyVerifier !&#x3D; null) &#123;</span><br><span class="line">        mInputEventConsistencyVerifier.onInputEvent(q.mEvent, 0);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    InputStage stage;</span><br><span class="line">    if (q.shouldSendToSynthesizer()) &#123;</span><br><span class="line">        stage &#x3D; mSyntheticInputStage;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        stage &#x3D; q.shouldSkipIme() ? mFirstPostImeInputStage : mFirstInputStage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (stage !&#x3D; null) &#123;</span><br><span class="line">        &#x2F;&#x2F;关键点:上面决定将事件派发到那个InputStage中处理</span><br><span class="line">        stage.deliver(q);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        finishInputEvent(q);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ViewRootImpl-ViewPostImeInputStage"><a href="#ViewRootImpl-ViewPostImeInputStage" class="headerlink" title="ViewRootImpl.ViewPostImeInputStage"></a>ViewRootImpl.ViewPostImeInputStage</h3><p>前面事件会派发到ViewRootImpl.ViewPostImeInputStage中处理，它的父类InputStage.deliver()方法会调用apply()来处理Touch事件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">protected int onProcess(QueuedInputEvent q) &#123;</span><br><span class="line">    if (q.mEvent instanceof KeyEvent) &#123;</span><br><span class="line">        return processKeyEvent(q);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        final int source &#x3D; q.mEvent.getSource();</span><br><span class="line">        if ((source &amp; InputDevice.SOURCE_CLASS_POINTER) !&#x3D; 0) &#123;</span><br><span class="line">            &#x2F;&#x2F;关键点：执行分发touch事件</span><br><span class="line">            return processPointerEvent(q);</span><br><span class="line">        &#125; else if ((source &amp; InputDevice.SOURCE_CLASS_TRACKBALL) !&#x3D; 0) &#123;</span><br><span class="line">            return processTrackballEvent(q);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return processGenericMotionEvent(q);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private int processPointerEvent(QueuedInputEvent q) &#123;</span><br><span class="line">    final MotionEvent event &#x3D; (MotionEvent)q.mEvent;</span><br><span class="line">    ...</span><br><span class="line">    &#x2F;&#x2F;关键点：mView分发Touch事件，mView就是DecorView</span><br><span class="line">    boolean handled &#x3D; mView.dispatchPointerEvent(event);</span><br><span class="line">    maybeUpdatePointerIcon(event);</span><br><span class="line">    maybeUpdateTooltip(event);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="DecorView"><a href="#DecorView" class="headerlink" title="DecorView"></a>DecorView</h3><p>如果你熟悉安卓的Window，Activity和Dialog对应的ViewRootImpl成员mView就是DecorView，View的dispatchPointerEvent()代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;View.java</span><br><span class="line">public final boolean dispatchPointerEvent(MotionEvent event) &#123;</span><br><span class="line">    if (event.isTouchEvent()) &#123;</span><br><span class="line">        &#x2F;&#x2F;分发Touch事件</span><br><span class="line">        return dispatchTouchEvent(event);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return dispatchGenericMotionEvent(event);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为DecorView继承FrameLayout，上面所以会调用DecorView的dispatchTouchEvent()：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line"> public boolean dispatchTouchEvent(MotionEvent ev) &#123;</span><br><span class="line">     final Window.Callback cb &#x3D; mWindow.getCallback();</span><br><span class="line">     return cb !&#x3D; null &amp;&amp; !mWindow.isDestroyed() &amp;&amp; mFeatureId &lt; 0</span><br><span class="line">             ? cb.dispatchTouchEvent(ev) : super.dispatchTouchEvent(ev);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面Window.Callback都被Activity和Dialog实现，所以变量cb可能就是Activity和Dialog。</p>
+<h3 id="Activity"><a href="#Activity" class="headerlink" title="Activity"></a>Activity</h3><p>当上面cb是Activity时，执行Activity的dispatchTouchEvent():</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public boolean dispatchTouchEvent(MotionEvent ev) &#123;</span><br><span class="line">    if (ev.getAction() &#x3D;&#x3D; MotionEvent.ACTION_DOWN) &#123;</span><br><span class="line">        onUserInteraction();</span><br><span class="line">    &#125;</span><br><span class="line">    if (getWindow().superDispatchTouchEvent(ev)) &#123;&#x2F;&#x2F;关键点：getWindow().superDispatchTouchEvent(ev)</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">    return onTouchEvent(ev);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果你熟悉安卓的Window，Activity的getWindow()拿到的就是PhoneWindow，下面是PhoneWindow的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;PhoneWindow.java</span><br><span class="line">@Override</span><br><span class="line">public boolean superDispatchTouchEvent(MotionEvent event) &#123;</span><br><span class="line">    &#x2F;&#x2F;调用DecorView的superDispatchTouchEvent</span><br><span class="line">    return mDecor.superDispatchTouchEvent(event);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面是DecorView.superDispatchTouchEvent()代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;DecorView.java</span><br><span class="line">public boolean superDispatchTouchEvent(MotionEvent event) &#123;</span><br><span class="line">    &#x2F;&#x2F;调用ViewGroup的dispatchTouchEvent()开始我们常见的分发Touch事件</span><br><span class="line">    return super.dispatchTouchEvent(event);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h2><p><img src="https://gitee.com/pgm250/blog_img_bed/raw/master/wanan/%E4%BB%8ENative%E5%B1%82%E5%88%B0Framework%E5%B1%82Touch%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91.png" alt="从Native层到Framework层Touch事件分发"></p>
+<h1 id="为什么要DecorView-gt-Activity-gt-PhoneWindow-gt-DecorView传递事件"><a href="#为什么要DecorView-gt-Activity-gt-PhoneWindow-gt-DecorView传递事件" class="headerlink" title="为什么要DecorView -&gt; Activity -&gt; PhoneWindow -&gt; DecorView传递事件"></a>为什么要DecorView -&gt; Activity -&gt; PhoneWindow -&gt; DecorView传递事件</h1><p><strong>解耦!</strong> ViewRootImpl并不知道有Activity这种东西存在！它只是持有了DecorView。所以，不能直接把触摸事件送到Activity.dispatchTouchEvent()；那么，既然触摸事件已经到了Activity.dispatchTouchEvent()中了，为什么不直接分发给DecorView，而是要通过PhoneWindow来间接发送呢？因为Activity不知道有DecorView！但是，Activity持有PhoneWindow ，而PhoneWindow当然知道自己的窗口里有些什么了，所以能够把事件派发给DecorView。在Android中，Activity并不知道自己的Window中有些什么，这样耦合性就很低了。我们换一个Window试试？不管Window里面的内容如何，只要Window任然符合Activity制定的标准，那么它就能在Activity中很好的工作。当然，这就是解耦所带来的扩展性的好处。</p>
+<p>回复</p>
+<p>Yuan咕咚 : @蔡徐坤打篮球 </p>
+<p>请问一下，为啥先是DecorView，后面又回到DecorView了，此处为啥要这样设计。</p>
+<p>2020-03-01 12:15回复</p>
+<p>蔡徐坤打篮球 : @Yuan咕咚 </p>
+<p>上面已经说了“为什么要DecorView -&gt; Activity -&gt; PhoneWindow -&gt; DecorView传递事件”</p>
+<p>2020-03-01 18:45回复</p>
+<p>若邪 : @蔡徐坤打篮球 </p>
+<p>楼主您好，这样看，Activity持有一个Window对象，ViewRootImpl中持有的是DecorView，DecorView中可以拿到Activity中的window回调； 当事件由硬件传递到 …查看更多</p>
+<p>2020-03-06 01:05回复</p>
+<p>蔡徐坤打篮球 : @若邪 </p>
+<p>是的</p>
+<p>2020-03-06 08:56回复</p>
+<p>若邪 : @蔡徐坤打篮球 </p>
+<p>还有个疑问，Window中是应该持有一个DecorView，但是在通过WindowManager添加的时候，会生成一个ViewRootImpl，将DecorView放入其中，这个时候Window还算直 …查看更多</p>
+<p>2020-03-06 09:25回复</p>
+<p>蔡徐坤打篮球 : @若邪 </p>
+<p>每一个Window都对应着一个View和一个ViewRootImpl，Window和View通过ViewRootImpl来建立联系，所以Window还不算直接持有DecorView，建议您看一下《an …查看更多</p>
+<p>2020-03-07 11:42回复</p>
+<p><a href="mailto:250900678@qq.com">250900678@qq.com</a> : @蔡徐坤打篮球 </p>
+<p>ViewRootImpl 是知道DecorView 存在的，也就是ViewRootImpl 中的mView，是可以调用super.dispatchTouchEvent的，为什么要再转这么一圈非要传给A …查看更多</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/06/11/md/dailyQuestion/%E4%BA%8B%E4%BB%B6%E5%88%B0%E5%BA%95%E6%98%AF%E5%85%88%E5%88%B0DecorView%E8%BF%98%E6%98%AF%E5%85%88%E5%88%B0Window%E7%9A%84%EF%BC%9F/" data-id="ckbaofdvr001afcvmfgbj9but" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/06/11/md/dailyQuestion/%E5%90%AF%E5%8A%A8%E9%A1%B5%E7%99%BD%E5%B1%8F%E9%97%AE%E9%A2%98%E4%BC%98%E5%8C%96/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          md/dailyQuestion/启动页白屏问题优化
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/06/11/md/dailyQuestion/View%E7%9A%84onAttachedToWindow%20,onDetachedFromWindow%20%E8%B0%83%E7%94%A8%E6%97%B6%E6%9C%BA%EF%BC%8C%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">md/dailyQuestion/View的onAttachedToWindow ,onDetachedFromWindow 调用时机，使用场景是什么？</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/06/11/md/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89viewGroup/">md/自定义view/自定义viewGroup</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/md/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89View/">md/自定义view/自定义View</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/md/%E8%87%AA%E5%AE%9A%E4%B9%89view/Meituxiuxiu/">md/自定义view/Meituxiuxiu</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/md/lesson/synchronizeds/">md/lesson/synchronizeds</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/md/lesson/synchronized/">md/lesson/synchronized</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

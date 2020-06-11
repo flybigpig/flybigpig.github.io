@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>md/dailyQuestion/很久以前有Activity.onResume就是界面可见的说法，这种说法错了多少？ | FlyBigPig</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="很久以前有Activity.onResume就是界面可见的说法，这种说法错了多少？ 问题是：  Activity.onCreate 和 Activity.onResume，在调用时间上有差别么？可以从Message调度去考虑。 有没有一个合理的时机，让我们认为Activity 界面可见了？     仅从activity角度来看，oncreate oostart oonresume 都是messag">
+<meta property="og:type" content="article">
+<meta property="og:title" content="md&#x2F;dailyQuestion&#x2F;很久以前有Activity.onResume就是界面可见的说法，这种说法错了多少？">
+<meta property="og:url" content="http://yoursite.com/2020/06/11/md/dailyQuestion/%E5%BE%88%E4%B9%85%E4%BB%A5%E5%89%8D%E6%9C%89Activity.onResume%E5%B0%B1%E6%98%AF%E7%95%8C%E9%9D%A2%E5%8F%AF%E8%A7%81%E7%9A%84%E8%AF%B4%E6%B3%95%EF%BC%8C%E8%BF%99%E7%A7%8D%E8%AF%B4%E6%B3%95%E9%94%99%E4%BA%86%E5%A4%9A%E5%B0%91%EF%BC%9F/index.html">
+<meta property="og:site_name" content="FlyBigPig">
+<meta property="og:description" content="很久以前有Activity.onResume就是界面可见的说法，这种说法错了多少？ 问题是：  Activity.onCreate 和 Activity.onResume，在调用时间上有差别么？可以从Message调度去考虑。 有没有一个合理的时机，让我们认为Activity 界面可见了？     仅从activity角度来看，oncreate oostart oonresume 都是messag">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-06-11T11:06:10.731Z">
+<meta property="article:modified_time" content="2020-03-30T02:47:50.524Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="FlyBigPig" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">FlyBigPig</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-md/dailyQuestion/很久以前有Activity.onResume就是界面可见的说法，这种说法错了多少？" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/11/md/dailyQuestion/%E5%BE%88%E4%B9%85%E4%BB%A5%E5%89%8D%E6%9C%89Activity.onResume%E5%B0%B1%E6%98%AF%E7%95%8C%E9%9D%A2%E5%8F%AF%E8%A7%81%E7%9A%84%E8%AF%B4%E6%B3%95%EF%BC%8C%E8%BF%99%E7%A7%8D%E8%AF%B4%E6%B3%95%E9%94%99%E4%BA%86%E5%A4%9A%E5%B0%91%EF%BC%9F/" class="article-date">
+  <time datetime="2020-06-11T11:06:10.731Z" itemprop="datePublished">2020-06-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      md/dailyQuestion/很久以前有Activity.onResume就是界面可见的说法，这种说法错了多少？
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="很久以前有Activity-onResume就是界面可见的说法，这种说法错了多少？"><a href="#很久以前有Activity-onResume就是界面可见的说法，这种说法错了多少？" class="headerlink" title="很久以前有Activity.onResume就是界面可见的说法，这种说法错了多少？"></a>很久以前有Activity.onResume就是界面可见的说法，这种说法错了多少？</h1><blockquote>
+<p>问题是：</p>
+<ol>
+<li>Activity.onCreate 和 Activity.onResume，在调用时间上有差别么？可以从Message调度去考虑。</li>
+<li>有没有一个合理的时机，让我们认为Activity 界面可见了？</li>
+</ol>
+</blockquote>
+<hr>
+<blockquote>
+<p>仅从activity角度来看，oncreate oostart oonresume 都是message里面的逻辑，具体可以看ActivityThread里面的 HandleLaunchActivity 方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;private void handleLaunchActivity(ActivityClientRecord r, Intent customIntent, String reason) &#123;</span><br><span class="line">...</span><br><span class="line">Activity a &#x3D; performLaunchActivity(r, customIntent); &#x2F;&#x2F; 这里最终回调到Activity的performCreate、performStart</span><br><span class="line">if (a !&#x3D; null) &#123;</span><br><span class="line">        r.createdConfig &#x3D; new Configuration(mConfiguration);</span><br><span class="line">        reportSizeConfigurations(r);</span><br><span class="line">        Bundle oldState &#x3D; r.state;</span><br><span class="line">        &#x2F;&#x2F; 这里最终回调到Activity的performResume</span><br><span class="line">        handleResumeActivity(r.token, false, r.isForward,</span><br><span class="line">                !r.activity.mFinished &amp;&amp; !r.startsNotResumed, r.lastProcessedSeq, reason);</span><br><span class="line">...</span><br><span class="line">&gt;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是仅从应用开发角度来看，选择 <code>onWindowfocusChanged</code> 的首次回调是一个比较精准的可见时机</p>
+<p>整个activity启动大致回调流程为</p>
+<p>onCreate - onStart - onResume - measure - layout -measure - layout - draw - onWindowFocusChanged</p>
+<p>详细的说</p>
+<ol>
+<li>在onCreate阶段通过setContentView，布局被包装为PhoneWindow内部的DecorView对象</li>
+<li>在ActivityThread.handleResumeActivity阶段，执行完performResume后通过WindowManagerImpl的addView，DecorView被 setView 到 ViewRootImpl</li>
+<li>ViewRootImpl.setView 方法里通过 requestLayout - scheduleTraversals 向 Choreographer 请求安排绘制任务</li>
+<li>Choreographer收到VSYNC信号回调到ViewRootImpl的performTraversals对DecorView进行measure、layout、draw，其中由于首次performTraversals会涉及到初始化EGL，所以最终会执行两次该方法，因此decorView会经历：measure - layout - measure - layout draw</li>
+</ol>
+<p>至于 onWindowFocusChanged，得从第3步说起，在setView方法中，紧接在 requestLayout 之后的逻辑就是向WMS通过binder发起添加window的过程，WMS完成操作后会把windowFocusChanged的事件回调给应用进程，ViewRootImpl在把该事件分发给DecorView，而DecorView重载了View的 onWindowFocusChanged 方法，内部最终将消息通过接口回传给了Activity的onWindowFocusChanged。</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/06/11/md/dailyQuestion/%E5%BE%88%E4%B9%85%E4%BB%A5%E5%89%8D%E6%9C%89Activity.onResume%E5%B0%B1%E6%98%AF%E7%95%8C%E9%9D%A2%E5%8F%AF%E8%A7%81%E7%9A%84%E8%AF%B4%E6%B3%95%EF%BC%8C%E8%BF%99%E7%A7%8D%E8%AF%B4%E6%B3%95%E9%94%99%E4%BA%86%E5%A4%9A%E5%B0%91%EF%BC%9F/" data-id="ckbaofdvr001bfcvm862q5aqq" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/06/11/md/hotFix/%E6%8F%92%E6%A1%A9/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          md/hotFix/插桩
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/06/11/md/dailyQuestion/%E5%90%AF%E5%8A%A8%E9%A1%B5%E7%99%BD%E5%B1%8F%E9%97%AE%E9%A2%98%E4%BC%98%E5%8C%96/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">md/dailyQuestion/启动页白屏问题优化</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/06/11/md/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89viewGroup/">md/自定义view/自定义viewGroup</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/md/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89View/">md/自定义view/自定义View</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/md/%E8%87%AA%E5%AE%9A%E4%B9%89view/Meituxiuxiu/">md/自定义view/Meituxiuxiu</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/md/lesson/synchronizeds/">md/lesson/synchronizeds</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/md/lesson/synchronized/">md/lesson/synchronized</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

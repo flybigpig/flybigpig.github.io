@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>md/lesson/HTTP_NET | FlyBigPig</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="HTTP_NET网络分层 1.物理层 该层负责比特流在节点间的传输，即负责物理传输。该层的协议既与链路有关，也与传输介质有关。其通俗来讲就是把计算机连接起来的物理手段。 2.数据链路层 该层控制网络层与物理层之间的通信，其主要功能是如何在不可靠的物理线路上进行数据的可靠传递。为了保证传输，从网络层接收到的数据被分割成特定的可被物理层传输的帧。帧是用来移动数据的结构包，它不仅包括原始数据，还包括发送">
+<meta property="og:type" content="article">
+<meta property="og:title" content="md&#x2F;lesson&#x2F;HTTP_NET">
+<meta property="og:url" content="http://yoursite.com/2020/06/11/md/lesson/HTTP_NET/index.html">
+<meta property="og:site_name" content="FlyBigPig">
+<meta property="og:description" content="HTTP_NET网络分层 1.物理层 该层负责比特流在节点间的传输，即负责物理传输。该层的协议既与链路有关，也与传输介质有关。其通俗来讲就是把计算机连接起来的物理手段。 2.数据链路层 该层控制网络层与物理层之间的通信，其主要功能是如何在不可靠的物理线路上进行数据的可靠传递。为了保证传输，从网络层接收到的数据被分割成特定的可被物理层传输的帧。帧是用来移动数据的结构包，它不仅包括原始数据，还包括发送">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-06-11T11:06:10.749Z">
+<meta property="article:modified_time" content="2020-04-11T06:46:13.075Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="FlyBigPig" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">FlyBigPig</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-md/lesson/HTTP_NET" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/11/md/lesson/HTTP_NET/" class="article-date">
+  <time datetime="2020-06-11T11:06:10.749Z" itemprop="datePublished">2020-06-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      md/lesson/HTTP_NET
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="HTTP-NET"><a href="#HTTP-NET" class="headerlink" title="HTTP_NET"></a>HTTP_NET</h1><h4 id="网络分层"><a href="#网络分层" class="headerlink" title="网络分层"></a>网络分层</h4><blockquote>
+<p><strong>1.物理层</strong></p>
+<p>该层负责比特流在节点间的传输，即负责物理传输。该层的协议既与链路有关，也与传输介质有关。其通俗来讲就是把计算机连接起来的物理手段。</p>
+<p><strong>2.数据链路层</strong></p>
+<p>该层控制网络层与物理层之间的通信，其主要功能是如何在不可靠的物理线路上进行数据的可靠传递。为了保证传输，从网络层接收到的数据被分割成特定的可被物理层传输的帧。帧是用来移动数据的结构包，它不仅包括原始数据，还包括发送方和接收方的物理地址以及纠错和控制信息。其中的地址确定了帧将发送到何处，而纠错和控制信息则确保帧无差错到达。如果在传送数据时，接收点检测到所传数据中有差错，就要通知发送方重发这一帧。</p>
+<p><strong>3.网络层</strong></p>
+<p>该层决定如何将数据从发送方路由到接收方。网络层通过综合考虑发送优先权、网络拥塞程度、服务质量以及可选路由的花费来决定从一个网络中的节点 A 到另一个网络中节点 B 的最佳路径。</p>
+<p><strong>4.传输层</strong></p>
+<p>该层为两台主机上的应用程序提供端到端的通信。相比之下，网络层的功能是建立主机到主机的通信。传输层有两个传输协议：TCP（传输控制协议）和UDP（用户数据报协议）。其中，TCP是一个可靠的面向连接的协议，UDP是不可靠的或者说无连接的协议。</p>
+<p><strong>5.应用层</strong></p>
+<p>应用程序收到传输层的数据后，接下来就要进行解读。解读必须事先规定好格式，而应用层就是规定应用程序的数据格式的。它的主要协议有HTTP、FTP、Telnet、SMTP、POP3等。</p>
+</blockquote>
+<h4 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h4>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/06/11/md/lesson/HTTP_NET/" data-id="ckbaofdvv001hfcvmhp7f8sgt" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/06/11/md/lesson/JVM/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          md/lesson/JVM
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/06/11/md/lesson/GC/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">md/lesson/GC</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/06/11/md/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89viewGroup/">md/自定义view/自定义viewGroup</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/md/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89View/">md/自定义view/自定义View</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/md/%E8%87%AA%E5%AE%9A%E4%B9%89view/Meituxiuxiu/">md/自定义view/Meituxiuxiu</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/md/lesson/synchronizeds/">md/lesson/synchronizeds</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/md/lesson/synchronized/">md/lesson/synchronized</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>md/开发艺术探索 | FlyBigPig</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="开发艺术探索 app启动流程  1234567891011Activity.startActivity()--&gt;Activity.startActivityForResult()--&gt;Instrumentation.execStartActivity()--&gt;ActivityTaskManager.getService().startActivity() --&gt;public">
+<meta property="og:type" content="article">
+<meta property="og:title" content="md&#x2F;开发艺术探索">
+<meta property="og:url" content="http://yoursite.com/2020/06/11/md/%E5%BC%80%E5%8F%91%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2/index.html">
+<meta property="og:site_name" content="FlyBigPig">
+<meta property="og:description" content="开发艺术探索 app启动流程  1234567891011Activity.startActivity()--&gt;Activity.startActivityForResult()--&gt;Instrumentation.execStartActivity()--&gt;ActivityTaskManager.getService().startActivity() --&gt;public">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-06-11T11:06:10.713Z">
+<meta property="article:modified_time" content="2020-04-22T07:05:45.901Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="FlyBigPig" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">FlyBigPig</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-md/开发艺术探索" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/11/md/%E5%BC%80%E5%8F%91%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2/" class="article-date">
+  <time datetime="2020-06-11T11:06:10.713Z" itemprop="datePublished">2020-06-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      md/开发艺术探索
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="开发艺术探索"><a href="#开发艺术探索" class="headerlink" title="开发艺术探索"></a>开发艺术探索</h1><blockquote>
+<p>app启动流程</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Activity.startActivity()--&gt;Activity.startActivityForResult()--&gt;</span><br><span class="line">Instrumentation.execStartActivity()--&gt;ActivityTaskManager.getService().startActivity() --&gt;</span><br><span class="line"></span><br><span class="line">public class ActivityManagerService extends IActivityManager.Stub</span><br><span class="line">        implements Watchdog.Monitor, BatteryStatsImpl.BatteryCallback </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">ActivityManagerService.startActivity()--&gt; ActivityManagerService.startActivityAsUser()--&gt;</span><br><span class="line"></span><br><span class="line">ActivityStarter.startActivityMayWait()--  mSupervisor.getActivityMetricsLogger().notifyActivityLaunching();</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>从startactivity方法中开始分析，startActivity方法有好几种重载方式，但他们都最终调用startActivityResult方法</p>
+<ul>
+<li><pre><code> public void startActivityForResult(Intent intent,int requestCode,
+    @Nullable Bundle options) {
+        if (mParent == null) {
+                Instrumentation.ActivityResult ar =
+                        mInstrumentation.execStartActivity(
+                                this,mMainThread.getApplicationThread(),mToken,this,
+                                intent,requestCode,options);
+                if (ar != null) {
+                        mMainThread.sendActivityResult(
+                                mToken,mEmbeddedID,requestCode,ar.getResultCode(),
+                                ar.getResultData());
+                }
+                if (requestCode =&gt; 0) {
+                        // If this start is requesting a result,we can avoid making
+                        // the activity visible until the result is received. Setting
+                        // this code during onCreate(Bundle savedInstanceState) or onResume() will keep the
+                        // activity hidden during this time,to avoid flickering.
+                        // This can only be done when a result is requested because
+                        // that guarantees we will get information back when the
+                        // activity is finished,no matter what happens to it.
+                        mStartedActivity = true;
+                }
+                final View decor = mWindow != null ? mWindow.peekDecorView() : null;
+                if (decor != null) {
+                        decor.cancelPendingInputEvents();
+                }
+                // TODO Consider clearing/flushing other event sources and events for child windows.
+        }else{
+         ...
+        }
+ }
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">我们只需要关注mParent &#x3D;&#x3D; null这部分逻辑即可</span><br><span class="line"></span><br><span class="line">mParent代表的是ActivityGroup，ActivityGroup最开始被用来在一个界面中嵌入多个子Activity</span><br><span class="line"></span><br><span class="line">但最后被废弃。系统推荐Fragment来代替ActivityGroup。</span><br><span class="line"></span><br><span class="line">**[Instrumentation](C:\Users\czdxn\Desktop\md\think\think\md\Instrumentation.md)**</span><br></pre></td></tr></table></figure>
+ public ActivityResult execStartActivity(
+                Context who,IBinder contextThread,IBinder token,Activity target,
+                Intent intent,int requestCode,Bundle options) {
+        IApplicationThread whoThread = (IApplicationThread) contextThread;
+        if (mActivityMonitors != null) {
+                synchronized (mSync) {
+                        final int N = mActivityMonitors.size();
+                        for (int i=0; i&lt;N; i++) {
+                                final ActivityMonitor am = mActivityMonitors.get(i);
+                                if (am.match(who,null,intent)) {
+                                        am.mHits++;
+                                        if (am.isBlocking()) {
+                                                return requestCode =&gt; 0 ? am.getResult() : null;
+                                        }
+                                        break;
+                                }
+                        }
+                }
+        }
+        // really do this work to start the activity
+        // **really startactivity**
+        try {
+                intent.migrateExtraStreamToClipData();
+                intent.prepareToLeaveProcess();
+                int result = ActivityManagerNative.getDefault()
+                        .startActivity(whoThread,who.getBasePackageName(),intent,
+                                        intent.resolveTypeIfNeeded(who.getContentResolver()),
+                                        token,target != null ? target.mEmbeddedID : null,
+                                        requestCode,0,null,options);
+                checkStartActivityResult(result,intent);
+        } catch (RemoteException e) {
+        }
+      return null;
+    }
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">&gt; 虽然看起来执行的是 execStartActivity() 方法，但终究是由&#96;ActivityManagerNative.getDefault().startActivity()&#96;</span><br><span class="line">&gt;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+&gt; try {
+&gt;                 intent.migrateExtraStreamToClipData();
+&gt;                 intent.prepareToLeaveProcess();
+&gt;                 int result = ActivityManagerNative.getDefault()
+&gt;                         .startActivity(whoThread,who.getBasePackageName(),intent,
+&gt;                                         intent.resolveTypeIfNeeded(who.getContentResolver()),
+&gt;                                         token,target != null ? target.mEmbeddedID : null,
+&gt;                                         requestCode,0,null,options);
+&gt;                 checkStartActivityResult(result,intent);
+&gt;         } catch (RemoteException e) {
+&gt;         }
+&gt; ```
+&gt;
+&gt; ActivityManagerService(AMS)继承ActivityManagerNative,而ActivityManagerNative继承Binder并实现了IActivityManager这个接口，因此AMS也是一个Binder，它是IActivityManager的具体实现，ActivityManagerNative.getDefault()返回的是一个IActivityManager类型的对象，因此他具体实现是AMS
+&gt;
+&gt; Instrumentation的execStartActivity方法，其中有一行代码：checkStartActivityResult(result,intent)
+&gt;
+&gt; 很明显，检查启动结果，当启动的Activity没有在AndroidManifest中注册时，就会抛异常
+&gt;
+&gt; 
+&gt;
+&gt; 所以只需要查看AMS的startActivity方法即可
+</code></pre></li>
+</ul>
+<p>performLaunchActivity方法最终完成了Activity对象的创建和启动过程，并且ActivityThread通过handleResumeActivity方法来调用被启动Activity的onResume这一生命周期方法。</p>
+<blockquote>
+<ol>
+<li><p>从ActivityClientRecord中获取待启动的Activity的组件信息</p>
+</li>
+<li><p>通过Instrumentation的newActivity方法使用类加载器创建Activity对象</p>
+</li>
+<li><p>通过LoadedApk的makeApplication方法来尝试创建Application对象</p>
+</li>
+<li><p>创建ContextImpl对象并通过Activity的attach方法来完成一些重要数据的初始化</p>
+</li>
+<li><p>调用Activity的onCreate方法</p>
+</li>
+</ol>
+</blockquote>
+<ul>
+<li></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/06/11/md/%E5%BC%80%E5%8F%91%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2/" data-id="ckbaofduw0012fcvm5e77fw14" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/06/11/md/%E6%89%93%E5%BC%80%E7%9B%B8%E5%86%8C%20%E8%A3%81%E5%89%AA/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          md/打开相册 裁剪
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/06/11/md/%E5%9F%BA%E7%A1%80%20intent%20bundle/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">md/基础 intent bundle</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/06/11/md/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89viewGroup/">md/自定义view/自定义viewGroup</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/md/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89View/">md/自定义view/自定义View</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/md/%E8%87%AA%E5%AE%9A%E4%B9%89view/Meituxiuxiu/">md/自定义view/Meituxiuxiu</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/md/lesson/synchronizeds/">md/lesson/synchronizeds</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/md/lesson/synchronized/">md/lesson/synchronized</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

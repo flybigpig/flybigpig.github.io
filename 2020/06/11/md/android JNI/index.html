@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>md/android JNI | FlyBigPig</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="android JNI Date  2020 0202  ndk new version has replace with cmake, cmake as the old android.mk file.  1234567JNI有如下两种注册native方法的途径：静态注册：先由Java得到本地方法的声明，然后再通过JNI实现该声明方法动态注册：先通过JNI重载JNI_OnLoad()实现本地方法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="md&#x2F;android JNI">
+<meta property="og:url" content="http://yoursite.com/2020/06/11/md/android%20JNI/index.html">
+<meta property="og:site_name" content="FlyBigPig">
+<meta property="og:description" content="android JNI Date  2020 0202  ndk new version has replace with cmake, cmake as the old android.mk file.  1234567JNI有如下两种注册native方法的途径：静态注册：先由Java得到本地方法的声明，然后再通过JNI实现该声明方法动态注册：先通过JNI重载JNI_OnLoad()实现本地方法">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-06-11T11:06:10.656Z">
+<meta property="article:modified_time" content="2020-03-26T06:47:48.948Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="FlyBigPig" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">FlyBigPig</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-md/android JNI" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/11/md/android%20JNI/" class="article-date">
+  <time datetime="2020-06-11T11:06:10.656Z" itemprop="datePublished">2020-06-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      md/android JNI
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="android-JNI"><a href="#android-JNI" class="headerlink" title="android JNI"></a>android JNI</h1><ul>
+<li>Date  2020 0202</li>
+</ul>
+<h4 id="ndk"><a href="#ndk" class="headerlink" title="ndk"></a>ndk</h4><blockquote>
+<p>new version has replace with cmake, cmake as the old android.mk file.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">JNI有如下两种注册native方法的途径：</span><br><span class="line"></span><br><span class="line">静态注册：</span><br><span class="line">先由Java得到本地方法的声明，然后再通过JNI实现该声明方法</span><br><span class="line">动态注册：</span><br><span class="line">先通过JNI重载JNI_OnLoad()实现本地方法，然后直接在Java中调用本地方法。</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="动态注册"><a href="#动态注册" class="headerlink" title="动态注册"></a>动态注册</h3><p>​     当我们使用<code>System.loadLibarary()</code>方法加载so库的时候，Java虚拟机就会找到这个<code>JNI_OnLoad</code>函数兵调用该函数，这个函数的作用是告诉Dalvik虚拟机此C库使用的是哪一个JNI版本，如果你的库里面没有写明JNI_OnLoad()函数，VM会默认该库使用最老的JNI 1.1版本。由于最新版本的JNI做了很多扩充，也优化了一些内容，如果需要使用JNI新版本的功能，就必须在<code>JNI_OnLoad()</code>函数声明JNI的版本。同时也可以在该函数中做一些初始化的动作，其实这个函数有点类似于<code>Android</code>中的<code>Activity</code>中的<code>onCreate()</code>方法。该函数前面也有三个关键字分别是<code>JNIEXPORT</code>，<code>JNICALL</code> ，<code>jint</code>。其中<code>JNIEXPORT</code>和<code>JNICALL</code>是两个宏定义，用于指定该函数时JNI函数。jint是JNI定义的数据类型，因为Java层和C/C++的数据类型或者对象不能直接相互的引用或者使用，JNI层定义了自己的数据类型，用于衔接<code>Java</code>层和JNI层</p>
+<p><code>JNI_OnLoad</code>声明版本，同时进行初始化操作。</p>
+<p><code>JNI_OnUnload</code>与上方法相对应</p>
+<h4 id="存在-java-调用jni-方法"><a href="#存在-java-调用jni-方法" class="headerlink" title="存在 java 调用jni 方法"></a>存在 java 调用jni 方法</h4><p><code>System.loadLibarary()</code> 方法加载so库，定义原生方法native</p>
+<p>通过生成.h文件，.cpp文件生成nvative 方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">相关命令</span><br><span class="line"></span><br><span class="line">javac *.java    	# 编译java类</span><br><span class="line"></span><br><span class="line">javah MyJNI		 # 生成h头文件</span><br><span class="line"></span><br><span class="line">set JAVA_HOME&#x3D;D:\SoftwareDeveloping\jdk32bit_1.6		# 设置javahome</span><br><span class="line"></span><br><span class="line">#        生成.cpp， 运行之后生成.o文件</span><br><span class="line">g++ -Wl,--add-stdcall-alias -I&quot;%JAVA_HOME%\include&quot; -I&quot;%JAVA_HOME%\include\win32&quot; -shared -o MyJNI.dll  </span><br><span class="line">MyJNIImpl.cpp</span><br><span class="line"></span><br><span class="line">java MyJNI   #  运行文件，调用jni</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="jni-调用java方法"><a href="#jni-调用java方法" class="headerlink" title="jni 调用java方法"></a>jni 调用java方法</h4><p><code>example</code></p>
+<p>举例说明，首先是加载so库</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JniDemo1</span>&#123;</span></span><br><span class="line">       <span class="keyword">static</span> &#123;</span><br><span class="line">             System.loadLibrary(<span class="string">"samplelib_jni"</span>);   <span class="comment">// 加载so 库</span></span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在jni中的实现</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">jint <span class="title">JNI_OnLoad</span><span class="params">(JavaVM* vm, <span class="keyword">void</span>* reserved)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>并且在这个函数里面去动态的注册native方法，完整的参考代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;jni.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Log4Android.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> &#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">char</span> *className = <span class="string">"com/gebilaolitou/jnidemo/JNIDemo2"</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">(JNIEnv *env, jobject, jlong handle)</span> </span>&#123;</span><br><span class="line">    LOGI(<span class="string">"JNI"</span>, <span class="string">"native: say hello ###"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> JNINativeMethod gJni_Methods_table[] = &#123;</span><br><span class="line">    &#123;<span class="string">"sayHello"</span>, <span class="string">"(J)V"</span>, (<span class="keyword">void</span>*)sayHello&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">jniRegisterNativeMethods</span><span class="params">(JNIEnv* env, <span class="keyword">const</span> <span class="keyword">char</span>* className,</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">const</span> JNINativeMethod* gMethods, <span class="keyword">int</span> numMethods)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    jclass clazz;</span><br><span class="line"></span><br><span class="line">    LOGI(<span class="string">"JNI"</span>,<span class="string">"Registering %s natives\n"</span>, className);</span><br><span class="line">    clazz = (env)-&gt;FindClass( className);</span><br><span class="line">    <span class="keyword">if</span> (clazz == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        LOGE(<span class="string">"JNI"</span>,<span class="string">"Native registration unable to find class '%s'\n"</span>, className);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> ((env)-&gt;RegisterNatives(clazz, gJni_Methods_table, numMethods) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        LOGE(<span class="string">"JNI"</span>,<span class="string">"RegisterNatives failed for '%s'\n"</span>, className);</span><br><span class="line">        result = <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    (env)-&gt;DeleteLocalRef(clazz);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">jint <span class="title">JNI_OnLoad</span><span class="params">(JavaVM* vm, <span class="keyword">void</span>* reserved)</span></span>&#123;</span><br><span class="line">    LOGI(<span class="string">"JNI"</span>, <span class="string">"enter jni_onload"</span>);</span><br><span class="line"></span><br><span class="line">    JNIEnv* env = <span class="literal">NULL</span>;</span><br><span class="line">    jint result = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (vm-&gt;GetEnv((<span class="keyword">void</span>**) &amp;env, JNI_VERSION_1_4) != JNI_OK) &#123;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    jniRegisterNativeMethods(env, className, gJni_Methods_table, <span class="keyword">sizeof</span>(gJni_Methods_table) / <span class="keyword">sizeof</span>(JNINativeMethod));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> JNI_VERSION_1_4;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="签名"><a href="#签名" class="headerlink" title="签名"></a>签名</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;签名&quot;，即将参数类型和返回值类型的组合</span><br><span class="line">javap 查看签名</span><br></pre></td></tr></table></figure>
+
+
+
+<p>jclass GetObjectClass(jobject obj)：<br> 通过对象实例来获取jclass，相当于Java中的getClass()函数</p>
+<p>jclass getSuperClass(jclass obj)：<br> 通过jclass可以获取其父类的jclass对象</p>
+<h4 id="构造对象"><a href="#构造对象" class="headerlink" title="构造对象"></a>构造对象</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jmethodID mid &#x3D; (*env)-&gt;GetMethodID(env, cls, &quot;&lt;init&gt;&quot;, &quot;()V&quot;);</span><br><span class="line">obj &#x3D; (*env)-&gt;NewObject(env, cls, mid);</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/06/11/md/android%20JNI/" data-id="ckbaofduo000sfcvm2r76cpkw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/06/11/md/Android%20OkHttp/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          md/Android OkHttp
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/06/11/md/aar/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">md/aar</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/06/11/md/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89viewGroup/">md/自定义view/自定义viewGroup</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/md/%E8%87%AA%E5%AE%9A%E4%B9%89view/%E8%87%AA%E5%AE%9A%E4%B9%89View/">md/自定义view/自定义View</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/md/%E8%87%AA%E5%AE%9A%E4%B9%89view/Meituxiuxiu/">md/自定义view/Meituxiuxiu</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/md/lesson/synchronizeds/">md/lesson/synchronizeds</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/md/lesson/synchronized/">md/lesson/synchronized</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
