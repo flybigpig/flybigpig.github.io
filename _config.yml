@@ -40,7 +40,7 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
 syntax_highlighter: highlight.js
@@ -104,3 +104,16 @@ deploy:
   type: git
   repository:  git@github.com:flybigpig/flybigpig.github.io.git
   branch : master
+
+#看板娘
+live2d:
+  enable: true
+  pluginModelPath: assets/
+  model:
+    use: live2d-widget-model-shizuku    #模板目录，在node_modules里,自己选择
+  display:
+    position: left
+    width: 250 
+    height: 500
+  mobile:
+    show: false  #是否在手机进行显示
