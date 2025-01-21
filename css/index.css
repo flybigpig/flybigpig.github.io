@@ -1341,7 +1341,7 @@ canvas:not(#ribbon-canvas),
   --tab-button-active-bg: #fff;
   --card-bg: #fff;
   --card-meta: #858585;
-  --sidebar-bg: #f6f8fa;
+  --sidebar-bg: #00c4b6;
   --sidebar-menu-bg: #fff;
   --btn-hover-color: #ff7242;
   --btn-color: #fff;
@@ -1359,7 +1359,7 @@ canvas:not(#ribbon-canvas),
   --card-hover-box-shadow: 0 3px 8px 6px rgba(7,17,27,0.09);
   --pseudo-hover: #ff7242;
   --headline-presudo: #a0a0a0;
-  --scrollbar-color: #49b1f5;
+  --scrollbar-color: #00c4b6;
   --default-bg-color: #49b1f5;
   --zoom-bg: #fff;
   --mark-bg: rgba(0,0,0,0.3);
@@ -2568,14 +2568,14 @@ figure.highlight pre .javascript .function {
 #aside-content .card-info #card-info-btn {
   display: block;
   margin-top: 14px;
-  background-color: var(--btn-bg);
+  background-color: #00c4b6;
   color: var(--btn-color);
   text-align: center;
   line-height: 2.4;
   border-radius: 7px;
 }
 #aside-content .card-info #card-info-btn:hover {
-  background-color: var(--btn-hover-color);
+  background-color: var(--btn-bg);
 }
 #aside-content .card-info #card-info-btn span {
   padding-left: 10px;
@@ -3269,6 +3269,13 @@ figure.highlight pre .javascript .function {
   background-attachment: scroll;
   background-position: bottom;
   background-size: cover;
+}
+#footer:before {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--mark-bg);
+  content: '';
 }
 #footer-wrap {
   position: relative;
@@ -4246,7 +4253,7 @@ figure.highlight pre .javascript .function {
   margin-bottom: 5px;
   width: 35px;
   height: 35px;
-  background-color: var(--btn-bg);
+  background-color: #00c4b6;
   color: var(--btn-color);
   text-align: center;
   font-size: 16px;
@@ -4255,7 +4262,7 @@ figure.highlight pre .javascript .function {
 }
 #rightside > div > button:hover,
 #rightside > div > a:hover {
-  background-color: var(--btn-hover-color);
+  background-color: var(--btn-bg);
 }
 #rightside #mobile-toc-button {
   display: none;
