@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "hexo": "^7.3.0",
+    "hexo-admin": "^2.3.0",
     "hexo-asset-image": "^1.0.0",
     "hexo-deployer-git": "^4.0.0",
     "hexo-generator-archive": "^2.0.0",
@@ -29,6 +30,7 @@
     "hexo-tag-dplayer": "^0.3.3",
     "hexo-theme-landscape": "^1.0.0",
     "live2d-widget-model-nico": "^1.0.5",
-    "live2d-widget-model-shizuku": "^1.0.5"
+    "live2d-widget-model-shizuku": "^1.0.5",
+    "valine": "^1.5.3"
   }
 }
