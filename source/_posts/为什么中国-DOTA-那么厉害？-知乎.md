@@ -1,7 +1,7 @@
 ---
 title: 为什么中国 DOTA 那么厉害？ - 知乎
 date: 2025-01-21 20:36:12
-tags:
+tags: Dota2
 ---
 
 
