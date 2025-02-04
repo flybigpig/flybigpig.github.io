@@ -1,6 +1,6 @@
 ---
 title: Free Think
-date: 2025-01-21 21:05:54
+date: 2025-01-21
 description：这个回答写给真正喜欢对方“很久”的人 
 ---
 
