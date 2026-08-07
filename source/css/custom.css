@@ -1,0 +1,46 @@
+/* =========================================================
+   Butterfly 自定义美化样式 (被 _config.butterfly.yml 注入)
+   ========================================================= */
+
+/* 柔和渐变背景（明色） */
+body {
+  background: linear-gradient(180deg, #fff6f0 0%, #fdfcff 45%, #eef6ff 100%) fixed;
+}
+
+/* 柔和渐变背景（暗色） */
+html[data-theme="dark"] body {
+  background: linear-gradient(180deg, #1b1410 0%, #12121a 60%, #0e1620 100%) fixed;
+}
+
+/* 平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 首页文章卡片悬浮微抬升 + 阴影 */
+#recent-posts .recent-post-item {
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+#recent-posts .recent-post-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(255, 114, 66, .18);
+}
+
+/* 侧栏头像悬浮旋转 */
+#aside-content .avatar-img {
+  border-radius: 50%;
+  transition: transform .6s ease;
+}
+#aside-content .avatar-img:hover {
+  transform: rotate(360deg);
+}
+
+/* 链接颜色过渡更顺滑 */
+a {
+  transition: color .2s ease;
+}
+
+/* 引用块左侧加粗描边，呼应主题色 */
+#article-container blockquote {
+  border-left: .3em solid #FF7242;
+}

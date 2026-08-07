@@ -1,8 +1,9 @@
 ---
 title: 为什么中国 DOTA 那么厉害？ - 知乎
 date: 2025-01-21 20:36:12
-tags: Dota2 
+tags: Dota2
 description: 究其原因是啥？两个字：要脸。三个字：凭什么？
+categories: Dota2
 ---
 
 

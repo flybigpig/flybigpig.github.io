@@ -1,0 +1,134 @@
+# =========================================================
+# Butterfly 主题美化覆盖配置
+# 说明：本文件(_config.butterfly.yml)会被 Hexo 深合并覆盖
+#       themes/butterfly/_config.yml，请勿直接改动主题内配置。
+# 生成：hexo clean && hexo g   预览：hexo s
+# =========================================================
+
+# ---------- 导航栏：固定悬浮 ----------
+nav:
+  fixed: true
+  display_title: true
+  display_post_title: true
+
+# ---------- 顶部菜单 ----------
+menu:
+  Home: / || fas fa-home
+  Archives: /archives/ || fas fa-archive
+  Tags: /tags/ || fas fa-tags
+  Categories: /categories/ || fas fa-folder-open
+  About: /about/ || fas fa-heart
+
+# ---------- 代码块：Mac 风格 + 深色高亮 ----------
+code_blocks:
+  theme: darker
+  macStyle: true
+  height_limit: false
+  copy: true
+  language: true
+  shrink: true
+
+# ---------- 社交链接 ----------
+social:
+  fab fa-github: https://github.com/flybigpig || Github || '#24292e'
+
+# ---------- 站点图标 / 头像 ----------
+favicon: /img/butterfly.png
+avatar:
+  img: /img/butterfly.png
+  effect: false
+
+# ---------- 头图 / 页脚图(使用主题自带 demo 图) ----------
+disable_top_img: false
+default_top_img: /img/top1.jpg
+index_img: /img/top1.jpg
+archive_img:
+footer_img: /img/top1.jpg
+
+# ---------- 首页副标题(打字机效果) ----------
+subtitle:
+  enable: true
+  effect: true
+  sub: 轻轻的我走了， 正如我轻轻的来； 我轻轻的招手， 作别西天的云彩
+
+# ---------- 主题配色：温暖珊瑚橙 ----------
+theme_color:
+  enable: true
+  main: "#40e0d0"
+  paginator: "#40e0d0"
+  button_hover: "#000000"
+  text_selection: "#40e0d0"
+  link_color: "#40e0d0"
+  meta_color: "#858585"
+  hr_color: "#FFD1C1"
+  code_foreground: "#F47466"
+  code_background: "rgba(27, 31, 35, .05)"
+  toc_color: "#40e0d0"
+  blockquote_padding_color: "#40e0d0"
+  blockquote_background_color: "#FFF3EE"
+  scrollbar_color: "#40e0d0"
+  meta_theme_color_light: "ffffff"
+  meta_theme_color_dark: "#0d0d0d"
+
+# ---------- 文章美化：标题前缀图标 ----------
+beautify:
+  enable: true
+  field: post
+  title_prefix_icon: '\f0c1'
+  title_prefix_icon_color: "#40e0d0"
+
+# ---------- 页脚 ----------
+footer:
+  owner:
+    enable: true
+    since: 2026
+  copyright:
+    enable: false
+    version: true
+  custom_text: '由 Hexo & Butterfly 驱动 · 记录生活与思考'
+
+# ---------- 右下角按钮：显示滚动百分比 ----------
+rightside_scroll_percent: true
+
+# ---------- 鼠标点击特效：爱心 ----------
+click_heart:
+  enable: true
+  mobile: false
+
+fireworks:
+    enable: true
+
+# ---------- 注入自定义 CSS ----------
+inject:
+  head:
+    - <link rel="stylesheet" href="../css/custom.css">
+
+# ---------- 文章版权声明：关闭 ----------
+# 关闭后文章底部不再渲染 Author / Link / Copyright Notice 那段声明
+# （默认主题 themes/butterfly/_config.yml 里 post_copyright.enable 为 true）
+post_copyright:
+  enable: false
+
+# ---------- 评论系统：Gitalk ----------
+# 前置准备（必做，否则评论区会报错）：
+#   1. GitHub → Settings → Developer settings → OAuth Apps → New OAuth App
+#      Authorization callback URL 填你的站点域名，如 https://你的域名
+#      拿到 Client ID 和 Client Secret
+#   2. 新建一个【公开】GitHub 仓库（如 blog-comments）用于存放评论 issue
+comments:
+  use: Gitalk
+  text: true
+  lazyload: false
+
+gitalk:
+  client_id: Ov23liCFi23ruhnCooNw
+  client_secret: 672505640a3c6476eaf7977be04c3c53a593406a
+  repo: gitalk-comments
+  owner: flybigpig
+  admin:
+    - flybigpig
+  option:
+    language: zh-CN
+    distractionFreeMode: false
+    
+

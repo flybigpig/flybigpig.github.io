@@ -5,9 +5,13 @@
 # Site
 title: flybigpig温暖小窝
 subtitle: ''
-description: ''
+description: 'flybigpig 的温暖小窝 —— 记录生活、思考与灵感'
 keywords:
-author: John Doe
+  - 博客
+  - 生活
+  - 随笔
+  - flybigpig
+author: Drachfly Orange
 language: en
 timezone: ''
 
